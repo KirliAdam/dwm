@@ -20,5 +20,6 @@
 #include "scratchpad.h"
 #include "sticky.h"
 #include "vanitygaps.h"
+#include "xrdb.h"
 /* Layouts */
 #include "layout_flextile-deluxe.h"
