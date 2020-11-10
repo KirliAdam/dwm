@@ -221,7 +221,7 @@ static const Rule rules[] = {
 	RULE(.class = "Stremio", .tags = 1 << 4)
 	RULE(.class = "Dragon", .iscentered = 1)
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
-}
+};
 
 
 
