@@ -191,10 +191,10 @@ flextitlecalculate(
 			else
 				clientsnstack2++;
 		}
-		else if (i % 2)
-			clientsnstack++;
-		else
+		else if ((i - m->nmaster) % 2)
 			clientsnstack2++;
+		else
+			clientsnstack++;
 		i++;
 	}
 

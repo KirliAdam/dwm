@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx       = 5;   /* border pixel of windows */
+static const unsigned int borderpx       = 3;   /* border pixel of windows */
 static const unsigned int snap           = 32;  /* snap pixel */
 static const unsigned int gappih         = 20;  /* horiz inner gap between windows */
 static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
@@ -15,10 +15,12 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
+static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
 static const char *fonts[]               ={ "Iosevka:size=10",
  "Symbols Nerd Font:size=12"
  };
+
 static const char dmenufont[]            = "Iosevka:size=10";
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -217,9 +219,9 @@ static const Rule rules[] = {
 	RULE(.class = "firefox", .tags = 1 << 1)
 	RULE(.class = "tutanota-desktop", .tags = 1 << 5)
 	RULE(.class = "Stremio", .tags = 1 << 4)
-	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 	RULE(.class = "Dragon", .iscentered = 1)
-};
+	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+}
 
 
 
@@ -332,8 +334,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,        view,                   {0} },
 	{ MODKEY|ControlMask,           XK_z,          showhideclient,         {0} },
 	{ MODKEY|ShiftMask,             XK_c,          killclient,             {0} },
-	{ MODKEY,                       XK_x,          killunsel,              {0} },
+	{ MODKEY|ShiftMask,             XK_x,          killunsel,              {0} },
 	{ MODKEY|ShiftMask,             XK_q,          quit,                   {0} },
+	{ MODKEY|ShiftMask,             XK_F5,         xrdb,                   {.v = NULL } },
 	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
@@ -348,9 +351,10 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Return,     mirrorlayout,           {0} },          /* flextile, flip master and stack areas */
 	{ MODKEY,                       XK_space,      setlayout,              {0} },
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
-	{ MODKEY,                       XK_quotedbl,   togglescratch,          {.ui = 0 } },
-	{ MODKEY|ControlMask,           XK_quotedbl,   setscratch,             {.ui = 0 } },
-	{ MODKEY|ShiftMask,             XK_quotedbl,   removescratch,          {.ui = 0 } },
+	{ MODKEY,                       XK_quotedbl,      togglescratch,          {.ui = 0 } },
+	{ MODKEY|ControlMask,           XK_quotedbl,      setscratch,             {.ui = 0 } },
+	{ MODKEY|ShiftMask,             XK_quotedbl,      removescratch,          {.ui = 0 } },
+	{ MODKEY|ShiftMask,             XK_s,          togglesticky,           {0} },
 	{ MODKEY,                       XK_0,          view,                   {.ui = ~SPTAGMASK } },
 	{ MODKEY|ShiftMask,             XK_0,          tag,                    {.ui = ~SPTAGMASK } },
 	{ MODKEY,                       XK_comma,      focusmon,               {.i = -1 } },
@@ -359,7 +363,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_comma,      cyclelayout,            {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period,     cyclelayout,            {.i = +1 } },
-	{ MODKEY,	                XK_s,          togglesticky,           {0} },
 	TAGKEYS(                        XK_1,                                  0)
 	TAGKEYS(                        XK_2,                                  1)
 	TAGKEYS(                        XK_3,                                  2)
